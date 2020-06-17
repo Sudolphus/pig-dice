@@ -10,7 +10,7 @@ function Scoreboard() {
   this.player2Score = 0;
 }
 
-Scoreboard.prototype.addScore(player, points) {
+Scoreboard.prototype.addScore = function(player, points) {
   if (player === 'player1') {
     this.player1Score += points;
   } else {
@@ -18,7 +18,7 @@ Scoreboard.prototype.addScore(player, points) {
   }
 }
 
-Scoreboard.prototype.winDetect() {
+Scoreboard.prototype.winDetect = function() {
   if (this.player1Score >= 100) {
     return "player 1 wins";
   } else if (this.player2Score >= 100) {
@@ -31,7 +31,7 @@ Scoreboard.prototype.winDetect() {
 function Die() {
 }
 
-Die.prototype.roll() {
+Die.prototype.roll = function() {
   return Math.floor(Math.random()*6+1);
 }
 
@@ -53,7 +53,7 @@ function dieResult(dieRoll) {
   }
 }
 
-function turn() {
+function turn(game) {
   let turnPoints = 0;
   let rollAgain = true;
   while (rollAgain) {
@@ -82,9 +82,14 @@ function playerSwitch(activePlayer) {
 function newGame() {
   let game = new Game();
   let activePlayer = firstPlayer();
-  const turnPoints = turn();
-  Game.scoreboard.addScore(activePlayer, turnPoints);
-  activePlayer = playerSwitch(activePlayer);
+  while (true) {
+    const turnPoints = turn(game);
+    game.scoreboard.addScore(activePlayer, turnPoints);
+    if (game.scoreboard.winDetect()) {
+      break;
+    }
+    activePlayer = playerSwitch(activePlayer);
+  }
 }
 //logic rolling a die, adding the score, detecting a one, play or pass
 
