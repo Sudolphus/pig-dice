@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dummy Title</title>
+    <title>Pig Dice</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
     <link href="css/styles.css" rel="stylesheet" type="text/css">
     <script src="js/jquery-3.5.1.js"></script>
@@ -9,7 +9,39 @@
   </head>
   <body>
     <div class="container">
-      
+      <div class="page-header">
+        <h1>Let's Play A Game of Pig!</h1>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <h2>Player <span class="player"></span> it's your turn.</h2> 
+          <button id="rollAgain" class="btn">Roll Again</button>
+          <button id="hold" class="btn">Hold</button>
+          <h3 id="resultHeader">Your roll is: <span class='dieResults'></span></h3>
+          <img src="img/Dice1.jpg" alt="Picture of a die" class="picDie" id="side1">
+          <img src="img/Dice2.jpg" alt="Picture of a die" class="picDie" id="side2">
+          <img src="img/Dice3.jpg" alt="Picture of a die" class="picDie" id="side3">
+          <img src="img/Dice4.jpg" alt="Picture of a die" class="picDie" id="side4">
+          <img src="img/Dice5.jpg" alt="Picture of a die" class="picDie" id="side5">
+          <img src="img/Dice6.jpg" alt="Picture of a die" class="picDie" id="side6">
+          <br>
+          <h4>Turn Score: <span class="displayTurnScore"></span></h4>
+        </div>
+        <div class="col-md-6">
+          <h2 class="showScore">Score</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <h3>Player 1</h3>
+              <h4>Total Score:<span class="player1TotalScore"></span></h4>
+            </div>
+            <div class="col-sm-6">
+              <h3>Player 2</h3>
+              <h4>Total Score:<span class="player2TotalScore"></span></h4>
+              
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

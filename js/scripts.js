@@ -91,10 +91,3 @@ function newGame() {
     activePlayer = playerSwitch(activePlayer);
   }
 }
-//logic rolling a die, adding the score, detecting a one, play or pass
-
-
-
-//logic for the user interface- button for die roll, button for play/pass, showing computer turn to player.
-
-
