@@ -9,8 +9,9 @@
   </head>
   <body>
     <div class="container">
-      <div class="page-header">
+      <div class="page-header center">
         <h1>Let's Play A Game of Pig!</h1>
+        <button class="btn" id="startGame">Begin!</button>
       </div>
       <div class="row">
         <div class="col-md-6">
@@ -24,20 +25,18 @@
           <img src="img/Dice4.jpg" alt="Picture of a die" class="picDie" id="side4">
           <img src="img/Dice5.jpg" alt="Picture of a die" class="picDie" id="side5">
           <img src="img/Dice6.jpg" alt="Picture of a die" class="picDie" id="side6">
-          <br>
-          <h4>Turn Score: <span class="displayTurnScore"></span></h4>
+          <h4 class="turnScore">Turn Score: <span class="displayTurnScore"></span></h4>
         </div>
         <div class="col-md-6">
-          <h2 class="showScore">Score</h2>
+          <h2 class="showScore center">Score</h2>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-sm-6 center">
               <h3>Player 1</h3>
               <h4>Total Score:<span class="player1TotalScore"></span></h4>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 center">
               <h3>Player 2</h3>
               <h4>Total Score:<span class="player2TotalScore"></span></h4>
-              
             </div>
           </div>
         </div>
