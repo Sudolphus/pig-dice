@@ -53,16 +53,38 @@ function dieResult(dieRoll) {
   }
 }
 
+function turn() {
+  let turnPoints = 0;
+  let rollAgain = true;
+  while (rollAgain) {
+    let dieRoll = game.die.roll();
+    if (dieResult(dieRoll)) {
+      turnPoints += dieRoll;
+    } else {
+      turnPoints = 0;
+      rollAgain = false;
+    }
+    if (rollAgain) {
+      rollAgain = confirm("Roll Again?");
+    }
+  }
+  return turnPoints;
+}
+
+function playerSwitch(activePlayer) {
+  if (activePlayer === 'player1') {
+    return 'player2';
+  } else {
+    return 'player1';
+  }
+}
+
 function newGame() {
   let game = new Game();
-  const firstPlayer = firstPlayer();
-  let dieRoll = Game.die.roll();
-  let turnPoints = 0;
-  if (dieResult(dieRoll)) {
-    turnPoints += dieRoll;
-  } else {
-    turnPoints = 0;
-  }
+  let activePlayer = firstPlayer();
+  const turnPoints = turn();
+  Game.scoreboard.addScore(activePlayer, turnPoints);
+  activePlayer = playerSwitch(activePlayer);
 }
 //logic rolling a die, adding the score, detecting a one, play or pass
 
