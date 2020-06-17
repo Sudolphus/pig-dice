@@ -45,10 +45,24 @@ function firstPlayer() {
   }
 }
 
+function dieResult(dieRoll) {
+  if (dieRoll === 1) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
 function newGame() {
   let game = new Game();
   const firstPlayer = firstPlayer();
-  
+  let dieRoll = Game.die.roll();
+  let turnPoints = 0;
+  if (dieResult(dieRoll)) {
+    turnPoints += dieRoll;
+  } else {
+    turnPoints = 0;
+  }
 }
 //logic rolling a die, adding the score, detecting a one, play or pass
 
