@@ -1,20 +1,32 @@
-# _{Application Name}_
+# _Pig Dice_
 
-#### _{Brief description of application}, {Date of current version}_
+#### _An App for Pigs, 06.17.2020_
 
-#### By _**Micheal Hansen**_
+#### By _**Micheal Hansen & Teresa Rosinski**_
 
 ## Description
 
-_{This is a detailed description of your application. Its purpose and usage.  Give as much detail as needed to explain what the application does, and any other information you want users or other developers to have. }_
+_An app that can play the game of Pig Dice, a simple die rolling game. In Pig Dice, a player rolls a die and scores the points shown, then decides whether to keep rolling or hold. A player may roll as many times as they like, but if they roll a one, they lose all points scored that turn, and must pass the die. First player to 100 wins the game._
 
 ## Specifications
 
 | Spec | Input | Output |
 | :-------------     | :------------- | :------------- |
-| **Homepage** | User accesses localhost:5004 | Homepage with user input form |
-| **Program Gathers User Input** | User input: "10" | Output: "10" |
-
+| **Homepage** | User opens index.html | Homepage with game interface |
+| **Program defines a game object containing a scorecard and a die** | User input: None necessary | Output: {scorecard, die} |
+| **Program defines a scorecard that keeps track of each player's score** | User input: None necessary | Output: {player: 0, computer: 0} |
+| **Program can add points to a player's score** | User input: player + 3 | Output: {player: 3, computer: 0} |
+| **Program can detect if a player has a winning score of 100** | Program input: {Player: 103, Computer: 87} | Output: Player Wins! |
+| **Program defines a die object** | User input: None necessary | Output: {} |
+| **Die object has roll method that returns 1-6** | User input: die.roll() | Output: 4 |
+| **Program initializes a new game when a player start** | User input: Clicks New Game Button | Output: Game starts |
+| **Program determines whether player or computer goes first through random generation** | User input: None necessary | Output: Player Starts |
+| **Program allows active player to roll a die and determine results** | User input: Clicks Roll | Output: 4 -> +4 Points |
+| **Program keeps track of points scored in a turn** | User input: None necessary | Output: turn points: 4 |
+| **Program allows player to decide to hold or roll again, unless a 1 is rolled** | User input: Player rolls | Output: Roll Again or Hold? |
+| **Program adds turn points to a players score when they hold** | User input: Clicks Hold | Output: {player: 4, computer: 0} |
+| **Program resets turn points to 0 and ends turn if a 1 is rolled** | User input: Rolls 1 | Output: Points=0, end turn |
+| **Program loops until a winner is determined** | User input: None necessary | Output: Next Turn |
 
 ## Setup/Installation Requirements
 
@@ -28,8 +40,8 @@ Open by downloading:
 
 Open via Bash/GitBash:
 1. Clone this repository onto your computer:
-`git clone {PUT_REPO_HERE}`
-2. Navigate into the `{NAME_OF_DIRECTORY}` directory in Visual Studio Code or preferred text editor
+`git clone https://github.com/Sudolphus/pig-dice`
+2. Navigate into the `pig-dice` directory in Visual Studio Code or preferred text editor
 `code .`
 3. Open index.html in Chrome or preferred browser:
 `open index.html`
@@ -39,7 +51,7 @@ Open via Bash/GitBash:
 
 ## Known Bugs
 
-_{Are there issues that have not yet been resolved that you want to let users know you know?  Outline any issues that would impact use of your application.  Share any workarounds that are in place. }_
+_None Currently Known_
 
 ## Support and contact details
 
@@ -56,4 +68,4 @@ _Please reach out through my GitHub account._
 
 MIT License.
 
-Copyright (c) 2020 **_Micheal Hansen_**
+Copyright (c) 2020 **_Micheal Hansen & Teresa Rosinski_**
