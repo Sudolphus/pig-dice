@@ -11,6 +11,7 @@ Game.prototype.reset = function(pointGoal, dieNumber, playAgainstAI) {
   this.turnPoints = 0;
   this.dieNumber = dieNumber;
   this.AI = playAgainstAI;
+  this.AILimit = 20+(10*(this.dieNumber-1));
 }
 
 Game.prototype.playerSwitch = function() {
@@ -121,15 +122,21 @@ function newGame(pointGoal, dieNumber, playAgainstAI) {
 const AIturn = function() {
   let bustFlag = false;
   let resultsString = '';
-  while (game.turnPoints < 20 && bustFlag === false && game.turnPoints+game.scoreboard.player2Score < game.scoreboard.pointGoal) {
-    const dieRoll = game.die.roll();
-    if (dieRoll >= 2) {
-      game.turnPoints += dieRoll;
-      resultsString += '<p>AI rolled ' + dieRoll + ' for a total of ' + game.turnPoints + "<br></p>";
-    } else {
-      game.turnPoints = 0;
-      resultsString += "<p>AI rolled a 1! Busted!</p>";
-      bustFlag = true;
+  while (game.turnPoints < game.AILimit && bustFlag === false && game.turnPoints+game.scoreboard.player2Score < game.scoreboard.pointGoal) {
+    let dieArray = [];
+    for (let i = 0; i < game.dieNumber; i++) {
+      dieArray.push(game.die.roll());
+    }
+    for (const die of dieArray) {
+      if (die >= 2) {
+        game.turnPoints += die;
+        resultsString += '<p>AI rolled ' + die + ' for a total of ' + game.turnPoints + "<br></p>";
+      } else {
+        game.turnPoints = 0;
+        resultsString += "<p>AI rolled a 1! Busted!</p>";
+        bustFlag = true;
+        break;
+      }
     }
   }
   displayAITurn(resultsString);
