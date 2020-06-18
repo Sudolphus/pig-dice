@@ -65,6 +65,9 @@ function firstPlayer() {
 function nextTurn() {
   game.turnPoints = 0;
   game.playerSwitch();
+  displayTurnPoints();
+  displayScore();
+  displayActivePlayer();
 }
 
 function roll() {
@@ -76,6 +79,7 @@ function roll() {
   } else {
     game.turnPoints += dieRoll;
   }
+  displayTurnPoints();
 }
 
 function hold() {
@@ -87,6 +91,8 @@ function newGame() {
   game.reset();
   game.activePlayer = firstPlayer();
   displayActivePlayer();
+  displayTurnPoints();
+  displayScore();
 }
 
 //UI Logic
@@ -111,9 +117,9 @@ const displayDieRoll = function(dieRoll) {
   }
 }
 
-const displayScore = function(scoreboard) {
-  $(".player1TotalScore").text(scoreboard.player1Score);
-  $(".player2TotalScore").text(scoreboard.player2Score);
+const displayScore = function() {
+  $(".player1TotalScore").text(game.scoreboard.player1Score);
+  $(".player2TotalScore").text(game.scoreboard.player2Score);
 }
 
 $(document).ready(function() {
