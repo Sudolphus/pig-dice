@@ -9,11 +9,11 @@
   text-align: center;
 }
 
-.picDie, .player1Winner, .player2Winner {
+.picDie, .player1Winner, .player2Winner, .gameInterface, .busted {
   display: none;
 }
 
-.player1Winner, .player2Winner {
+.player1Winner, .player2Winner, .busted {
   color: red;
 }
 

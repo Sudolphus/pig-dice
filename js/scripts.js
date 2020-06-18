@@ -72,9 +72,10 @@ function roll() {
   const dieRoll = game.die.roll();
   displayDieRoll(dieRoll);
   if (dieRoll === 1) {
-    alert('Busted!');
+    $(".busted").show();
     nextTurn();
   } else {
+    $(".busted").hide();
     game.turnPoints += dieRoll;
   }
   displayTurnPoints();
@@ -86,6 +87,7 @@ function winner() {
   } else {
     $(".player2Winner").show();
   }
+  $(".diceInterface").hide();
 }
 
 function hold() {
@@ -138,6 +140,8 @@ const displayScore = function() {
 $(document).ready(function() {
   $("#startGame").click(function(event) {
     event.preventDefault();
+    $(".gameInterface").show();
+    $(".diceInterface").show();
     newGame();
   })
   $("#roll").click(function(event) {
