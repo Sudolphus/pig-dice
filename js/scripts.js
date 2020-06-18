@@ -3,6 +3,20 @@
 function Game() {
   this.scoreboard = new Scoreboard();
   this.die = new Die();
+  this.activePlayer;
+}
+
+Game.prototype.reset() {
+  this.scoreboard.player1Score = 0;
+  this.scoreboard.player2Score = 0;
+}
+
+Game.prototype.playerSwitch() {
+  if (this.activePlayer === 'player1') {
+    this.activePlayer = 'player2';
+  } else {
+    this.activePlayer = 'player1';
+  }
 }
 
 function Scoreboard() {
@@ -36,72 +50,26 @@ Die.prototype.roll = function() {
 }
 
 //Game Logic
+let game = new Game();
+
 function firstPlayer() {
-  const coin = Math.floor(Math.random()*2+1);
-  if (coin === 1) {
+  if (Math.random() > .5) {
     return "player1";
-  } else if (coin === 2) {
+  } else {
     return "player2";
   }
 }
 
-function dieResult(dieRoll) {
-  if (dieRoll === 1) {
-    return false;
-  } else {
-    return true;
-  }
-}
-
-function turn(game) {
-  let turnPoints = 0;
-  displayTurnPoints(turnPoints);
-  let rollAgain = true;
-  while (rollAgain) {
-    let dieRoll = game.die.roll();
-    displayDieRoll(dieRoll);
-    if (dieResult(dieRoll)) {
-      turnPoints += dieRoll;
-    } else {
-      turnPoints = 0;
-      rollAgain = false;
-    }
-    displayTurnPoints(turnPoints);
-    if (rollAgain) {
-      rollAgain = confirm("Roll Again?");
-    }
-  }
-  return turnPoints;
-}
-
-function playerSwitch(activePlayer) {
-  if (activePlayer === 'player1') {
-    return 'player2';
-  } else {
-    return 'player1';
-  }
-}
-
 function newGame() {
-  let game = new Game();
-  let activePlayer = firstPlayer();
-  displayActivePlayer(activePlayer);
-  while (true) {
-    const turnPoints = turn(game);
-    game.scoreboard.addScore(activePlayer, turnPoints);
-    displayScores(game.scoreboard);
-    if (game.scoreboard.winDetect()) {
-      break;
-    }
-    activePlayer = playerSwitch(activePlayer);
-    displayActivePlayer(activePlayer);
-  }
+  game.reset();
+  game.activePlayer = firstPlayer();
+  displayActivePlayer();
 }
 
 //UI Logic
-const displayActivePlayer = function(activePlayer) {
+const displayActivePlayer = function() {
   playerDisplay = $(".player")
-  if (activePlayer === 'player1') {
+  if (game.activePlayer === 'player1') {
     playerNum = "1";
   } else {
     playerNum = "2";
