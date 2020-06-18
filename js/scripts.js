@@ -4,14 +4,14 @@ function Game() {
   this.scoreboard = new Scoreboard();
   this.die = new Die();
   this.turnPoints = 0;
-  this.activePlayer;
 }
 
-Game.prototype.reset = function(pointGoal) {
+Game.prototype.reset = function(pointGoal, playAgainstAI) {
   this.scoreboard.player1Score = 0;
   this.scoreboard.player2Score = 0;
   this.turnPoints = 0;
   this.scoreboard = new Scoreboard(pointGoal);
+  this.AI = playAgainstAI;
 }
 
 Game.prototype.playerSwitch = function() {
@@ -68,6 +68,9 @@ function nextTurn() {
   displayTurnPoints();
   displayScore();
   displayActivePlayer();
+  if (game.AI && game.activePlayer === 'player2') {
+    AIturn();
+  }
 }
 
 function roll() {
@@ -93,14 +96,39 @@ function hold() {
   }
 }
 
-function newGame(pointGoal) {
-  game.reset(pointGoal);
+function newGame(pointGoal, playAgainstAI) {
+  game.reset(pointGoal, playAgainstAI);
   game.activePlayer = firstPlayer();
   $(".player1Winner").hide();
   $(".player2Winner").hide();
   displayActivePlayer();
   displayTurnPoints();
   displayScore();
+  if (game.AI && game.activePlayer === "player2") {
+    AIturn();
+  }
+}
+
+const AIturn = function() {
+  let bustFlag = false;
+  let resultsString = '';
+  while (game.turnPoints < 20 && bustFlag === false && game.turnPoints+game.scoreboard.player2Score < game.scoreboard.pointGoal) {
+    const dieRoll = game.die.roll();
+    if (dieRoll >= 2) {
+      game.turnPoints += dieRoll;
+      resultsString += '<p>AI rolled ' + dieRoll + ' for a total of ' + game.turnPoints + "<br></p>";
+    } else {
+      game.turnPoints = 0;
+      resultsString += "<p>AI rolled a 1! Busted!</p>";
+      bustFlag = true;
+    }
+  }
+  displayAITurn(resultsString);
+  if (!bustFlag) {
+    hold();
+  } else {
+    nextTurn();
+  }
 }
 
 //UI Logic
@@ -146,15 +174,31 @@ const displayScore = function() {
   $(".player2TotalScore").text(game.scoreboard.player2Score);
 }
 
+const displayAITurn = function(resultsString) {
+  resultsOutput = $('.resultsString');
+  resultsOutput.empty();
+  resultsOutput.html(resultsString);
+}
+
+const beginGame = function(playAgainstAI) {
+  const playerInput = gatherNewGameInputs();
+  const dieInterface = $(".diceInterface");
+  $(".resultsString").empty();
+  $(".winnerInterface").addClass('col-md-6');
+  $(".gameInterface").show();
+  dieInterface.addClass('col-md-6');
+  dieInterface.show();
+  newGame(playerInput[0], playAgainstAI);
+}
+
 $(document).ready(function() {
-  $("#startGame").click(function(event) {
+  $("#startGameHuman").click(function(event) {
     event.preventDefault();
-    const playerInput = gatherNewGameInputs();
-    $(".winnerInterface").addClass('col-md-6');
-    $(".diceInterface").addClass('col-md-6');
-    $(".gameInterface").show();
-    $(".diceInterface").show();
-    newGame(playerInput[0]);
+    beginGame(false);
+  })
+  $("#startGameAI").click(function(event) {
+    event.preventDefault();
+    beginGame(true);
   })
   $("#roll").click(function(event) {
     event.preventDefault();
