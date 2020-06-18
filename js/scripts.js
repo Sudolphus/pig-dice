@@ -37,7 +37,7 @@ Scoreboard.prototype.addScore = function(player, points) {
 }
 
 Scoreboard.prototype.winDetect = function() {
-  if (this.player1Score >= this.pointGoal || this.player2Score >= pointGoal) {
+  if (this.player1Score >= this.pointGoal || this.player2Score >= this.pointGoal) {
     return true;
   } else {
     return false;
@@ -83,15 +83,6 @@ function roll() {
   displayTurnPoints();
 }
 
-function winner() {
-  if (game.scoreboard.player1Score >= game.scoreboard.pointGoal) {
-    $(".player1Winner").show();
-  } else {
-    $(".player2Winner").show();
-  }
-  $(".diceInterface").hide();
-}
-
 function hold() {
   game.scoreboard.addScore(game.activePlayer, game.turnPoints);
   if (game.scoreboard.winDetect()) {
@@ -116,6 +107,15 @@ function newGame(pointGoal) {
 const gatherNewGameInputs = function() {
   const pointGoal = parseInt($("select#pointGoal").val());
   return [pointGoal];
+}
+
+const winner = function() {
+  if (game.scoreboard.player1Score >= game.scoreboard.pointGoal) {
+    $(".player1Winner").show();
+  } else {
+    $(".player2Winner").show();
+  }
+  $(".diceInterface").hide();
 }
 
 const displayActivePlayer = function() {
