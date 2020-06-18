@@ -91,6 +91,7 @@ function winner() {
 function hold() {
   game.scoreboard.addScore(game.activePlayer, game.turnPoints);
   if (game.scoreboard.winDetect()) {
+    displayScore();
     winner();
   } else {
     nextTurn();
@@ -100,6 +101,8 @@ function hold() {
 function newGame() {
   game.reset();
   game.activePlayer = firstPlayer();
+  $(".player1Winner").hide();
+  $(".player2Winner").hide();
   displayActivePlayer();
   displayTurnPoints();
   displayScore();
@@ -136,5 +139,13 @@ $(document).ready(function() {
   $("#startGame").click(function(event) {
     event.preventDefault();
     newGame();
+  })
+  $("#roll").click(function(event) {
+    event.preventDefault();
+    roll();
+  })
+  $("#hold").click(function(event) {
+    event.preventDefault();
+    hold();
   })
 })
