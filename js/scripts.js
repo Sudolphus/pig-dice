@@ -65,6 +65,7 @@ function firstPlayer() {
 function nextTurn() {
   game.turnPoints = 0;
   game.playerSwitch();
+  displayDieRoll(0);
   displayTurnPoints();
   displayScore();
   displayActivePlayer();
@@ -163,9 +164,12 @@ const displayTurnPoints = function() {
 }
 
 const displayDieRoll = function(dieRoll) {
-  $(".picDie").hide();
+  const dieHeader = $("#resultHeader");
+  if (dieRoll === 0) {
+    dieHeader.empty();
+  }
   if (dieRoll > 0) {
-    $(`#side${dieRoll}`).show();
+    dieHeader.append(`<img src="img/Dice${dieRoll}.jpg" alt="Picture of a die">`)
   }
 }
 
