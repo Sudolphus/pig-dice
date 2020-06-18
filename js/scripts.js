@@ -7,10 +7,11 @@ function Game() {
   this.activePlayer;
 }
 
-Game.prototype.reset = function() {
+Game.prototype.reset = function(pointGoal) {
   this.scoreboard.player1Score = 0;
   this.scoreboard.player2Score = 0;
   this.turnPoints = 0;
+  this.scoreboard = new Scoreboard(pointGoal);
 }
 
 Game.prototype.playerSwitch = function() {
@@ -21,9 +22,10 @@ Game.prototype.playerSwitch = function() {
   }
 }
 
-function Scoreboard() {
+function Scoreboard(pointGoal) {
   this.player1Score = 0;
   this.player2Score = 0;
+  this.pointGoal = pointGoal;
 }
 
 Scoreboard.prototype.addScore = function(player, points) {
@@ -35,7 +37,7 @@ Scoreboard.prototype.addScore = function(player, points) {
 }
 
 Scoreboard.prototype.winDetect = function() {
-  if (this.player1Score >= 100 || this.player2Score >= 100) {
+  if (this.player1Score >= this.pointGoal || this.player2Score >= pointGoal) {
     return true;
   } else {
     return false;
@@ -82,7 +84,7 @@ function roll() {
 }
 
 function winner() {
-  if (game.scoreboard.player1Score >= 100) {
+  if (game.scoreboard.player1Score >= game.scoreboard.pointGoal) {
     $(".player1Winner").show();
   } else {
     $(".player2Winner").show();
@@ -100,8 +102,8 @@ function hold() {
   }
 }
 
-function newGame() {
-  game.reset();
+function newGame(pointGoal) {
+  game.reset(pointGoal);
   game.activePlayer = firstPlayer();
   $(".player1Winner").hide();
   $(".player2Winner").hide();
@@ -111,6 +113,11 @@ function newGame() {
 }
 
 //UI Logic
+const gatherNewGameInputs = function() {
+  const pointGoal = parseInt($("select#pointGoal").val());
+  return [pointGoal];
+}
+
 const displayActivePlayer = function() {
   playerDisplay = $(".player")
   if (game.activePlayer === 'player1') {
@@ -140,9 +147,10 @@ const displayScore = function() {
 $(document).ready(function() {
   $("#startGame").click(function(event) {
     event.preventDefault();
+    const playerInput = gatherNewGameInputs();
     $(".gameInterface").show();
     $(".diceInterface").show();
-    newGame();
+    newGame(playerInput[0]);
   })
   $("#roll").click(function(event) {
     event.preventDefault();
