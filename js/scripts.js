@@ -1,16 +1,15 @@
 //Business Logic
 //Game Objects
 function Game() {
-  this.scoreboard = new Scoreboard();
   this.die = new Die();
-  this.turnPoints = 0;
 }
 
-Game.prototype.reset = function(pointGoal, playAgainstAI) {
+Game.prototype.reset = function(pointGoal, dieNumber, playAgainstAI) {
+  this.scoreboard = new Scoreboard(pointGoal);
   this.scoreboard.player1Score = 0;
   this.scoreboard.player2Score = 0;
   this.turnPoints = 0;
-  this.scoreboard = new Scoreboard(pointGoal);
+  this.dieNumber = dieNumber;
   this.AI = playAgainstAI;
 }
 
@@ -75,16 +74,25 @@ function nextTurn() {
 }
 
 function roll() {
-  const dieRoll = game.die.roll();
-  displayDieRoll(dieRoll);
-  if (dieRoll === 1) {
-    $(".busted").show();
+  let bustFlag = false;
+  const busted = $(".busted");
+  for (let i = 0; i < game.dieNumber; i++) {
+    const dieRoll = game.die.roll();
+    displayDieRoll(dieRoll);
+    if (dieRoll === 1) {
+      bustFlag = true;
+      break;
+    } else {
+      busted.hide();
+      game.turnPoints += dieRoll;
+    }
+  }
+  if (bustFlag) {
+    busted.show();
     nextTurn();
   } else {
-    $(".busted").hide();
-    game.turnPoints += dieRoll;
+    displayTurnPoints();
   }
-  displayTurnPoints();
 }
 
 function hold() {
@@ -97,8 +105,8 @@ function hold() {
   }
 }
 
-function newGame(pointGoal, playAgainstAI) {
-  game.reset(pointGoal, playAgainstAI);
+function newGame(pointGoal, dieNumber, playAgainstAI) {
+  game.reset(pointGoal, dieNumber, playAgainstAI);
   game.activePlayer = firstPlayer();
   $(".player1Winner").hide();
   $(".player2Winner").hide();
@@ -135,7 +143,8 @@ const AIturn = function() {
 //UI Logic
 const gatherNewGameInputs = function() {
   const pointGoal = parseInt($("select#pointGoal").val());
-  return [pointGoal];
+  const dieNumber = parseInt($("select#dieNumber").val());
+  return [pointGoal, dieNumber];
 }
 
 const winner = function() {
@@ -192,7 +201,7 @@ const beginGame = function(playAgainstAI) {
   $(".gameInterface").show();
   dieInterface.addClass('col-md-6');
   dieInterface.show();
-  newGame(playerInput[0], playAgainstAI);
+  newGame(playerInput[0], playerInput[1], playAgainstAI);
 }
 
 $(document).ready(function() {
