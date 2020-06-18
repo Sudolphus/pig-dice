@@ -46,7 +46,7 @@ Open via Bash/GitBash:
 3. Open index.html in Chrome or preferred browser:
 `open index.html`
 
-#### To see my live website go to {GH_PAGES_LINK_HERE}!
+#### To see my live website go to https://sudolphus.github.io/pig-dice/!
 
 
 ## Known Bugs

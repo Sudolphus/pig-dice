@@ -9,7 +9,7 @@
   text-align: center;
 }
 
-.picDie, .player1Winner, .player2Winner, .gameInterface, .busted {
+.player1Winner, .player2Winner, .gameInterface, .busted {
   display: none;
 }
 
