@@ -116,6 +116,8 @@ const winner = function() {
     $(".player2Winner").show();
   }
   $(".diceInterface").hide();
+  $(".winnerInterface").removeClass('col-md-6');
+  $(".diceInterface").removeClass('col-md-6');
 }
 
 const displayActivePlayer = function() {
@@ -148,6 +150,8 @@ $(document).ready(function() {
   $("#startGame").click(function(event) {
     event.preventDefault();
     const playerInput = gatherNewGameInputs();
+    $(".winnerInterface").addClass('col-md-6');
+    $(".diceInterface").addClass('col-md-6');
     $(".gameInterface").show();
     $(".diceInterface").show();
     newGame(playerInput[0]);
