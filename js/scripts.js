@@ -35,10 +35,8 @@ Scoreboard.prototype.addScore = function(player, points) {
 }
 
 Scoreboard.prototype.winDetect = function() {
-  if (this.player1Score >= 100) {
-    return "player 1 wins";
-  } else if (this.player2Score >= 100) {
-    return "player 2 wins";
+  if (this.player1Score >= 100 || this.player2Score >= 100) {
+    return true;
   } else {
     return false;
   }
@@ -82,9 +80,21 @@ function roll() {
   displayTurnPoints();
 }
 
+function winner() {
+  if (game.scoreboard.player1Score >= 100) {
+    $(".player1Winner").show();
+  } else {
+    $(".player2Winner").show();
+  }
+}
+
 function hold() {
   game.scoreboard.addScore(game.activePlayer, game.turnPoints);
-  nextTurn();
+  if (game.scoreboard.winDetect()) {
+    winner();
+  } else {
+    nextTurn();
+  }
 }
 
 function newGame() {

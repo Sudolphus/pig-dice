@@ -9,8 +9,12 @@
   text-align: center;
 }
 
-.picDie {
+.picDie, .player1Winner, .player2Winner {
   display: none;
+}
+
+.player1Winner, .player2Winner {
+  color: red;
 }
 
 .showScore{
