@@ -3,15 +3,17 @@
 function Game() {
   this.scoreboard = new Scoreboard();
   this.die = new Die();
+  this.turnPoints = 0;
   this.activePlayer;
 }
 
-Game.prototype.reset() {
+Game.prototype.reset = function() {
   this.scoreboard.player1Score = 0;
   this.scoreboard.player2Score = 0;
+  this.turnPoints = 0;
 }
 
-Game.prototype.playerSwitch() {
+Game.prototype.playerSwitch = function() {
   if (this.activePlayer === 'player1') {
     this.activePlayer = 'player2';
   } else {
@@ -60,6 +62,27 @@ function firstPlayer() {
   }
 }
 
+function nextTurn() {
+  game.turnPoints = 0;
+  game.playerSwitch();
+}
+
+function roll() {
+  const dieRoll = game.die.roll();
+  displayDieRoll(dieRoll);
+  if (dieRoll === 1) {
+    alert('Busted!');
+    nextTurn();
+  } else {
+    game.turnPoints += dieRoll;
+  }
+}
+
+function hold() {
+  game.scoreboard.addScore(game.activePlayer, game.turnPoints);
+  nextTurn();
+}
+
 function newGame() {
   game.reset();
   game.activePlayer = firstPlayer();
@@ -77,13 +100,15 @@ const displayActivePlayer = function() {
   playerDisplay.text(playerNum);
 }
 
-const displayTurnPoints = function(turnPoints) {
-  $(".displayTurnScore").text(turnPoints);
+const displayTurnPoints = function() {
+  $(".displayTurnScore").text(game.turnPoints);
 }
 
 const displayDieRoll = function(dieRoll) {
   $(".picDie").hide();
-  $(`#side${dieRoll}`).show();
+  if (dieRoll > 0) {
+    $(`#side${dieRoll}`).show();
+  }
 }
 
 const displayScore = function(scoreboard) {
